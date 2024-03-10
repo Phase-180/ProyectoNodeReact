@@ -2,27 +2,27 @@ version: "3.9"
 
 name: mysql
 services:
-  db:
-    image: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: test
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: test
-    ports:
-      - 3306:3306
-    volumes:
-      - ./data/db:/var/lib/mysql
-    networks:
-            - redTest
+    db:
+        image: mysql
+        environment:
+        MYSQL_ROOT_PASSWORD: test
+        MYSQL_USER: admin
+        MYSQL_PASSWORD: test
+        ports:
+        - 3306:3306
+        volumes:
+        - ./data/db:/var/lib/mysql
+        networks:
+                - redTest
 
-  phpmyadmin:
-    image: phpmyadmin
-    ports:
-      - 8080:80
-    environment:
-      - PMA_ARBITRARY=1
-    networks:
-            - redTest
+    phpmyadmin:
+        image: phpmyadmin
+        ports:
+        - 8080:80
+        environment:
+        - PMA_ARBITRARY=1
+        networks:
+                - redTest
     www:
         build: .
         ports: 

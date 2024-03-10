@@ -1,37 +1,34 @@
-version: "3.9"
-
+version: "3.1"
 services:
-  db:
-    image: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: test
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: test
-    ports:
-      - 3306:3306
-    volumes:
-      - ./data/db:/var/lib/mysql
-    networks:
-      - redTest
-
-  phpmyadmin:
-    image: phpmyadmin
-    ports:
-      - 8080:80
-    environment:
-      - PMA_ARBITRARY=1
-    networks:
-      - redTest
-
-  www:
-    build: .
-    ports: 
-      - "80:80"
-    depends_on:
-      - db
-    networks:
-      - redTest
-
-networks:
-  redTest:
-    name: test-red
+    db:
+        image: mysql
+        restart: always
+        ports: 
+            - "3307:3306"
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_DATABASE: dbname
+            MYSQL_PASSWORD: test
+            MYSQL_ROOT_PASSWORD: test 
+        volumes:
+            - ./dump:/docker-entrypoint-initdb.d
+            - ./conf:/etc/mysql/conf.d
+            - persistent:/var/lib/mysql
+    libreria:
+          build: .
+          restart: always
+          ports:
+               - "80:80"
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        restart: always
+        links: 
+            - db:db
+        ports:
+            - 8000:80
+        environment:
+            MYSQL_USER: root
+            MYSQL_PASSWORD: test
+            MYSQL_ROOT_PASSWORD: test 
+volumes:
+    persistent:

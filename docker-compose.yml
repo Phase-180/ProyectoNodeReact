@@ -1,7 +1,29 @@
 version: "3.9"
+
 services:
-     libreria:
-          build: .
-          restart: always
-          ports:
-               - "80:80"
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_USER: root
+      MYSQL_PASSWORD: test
+    ports:
+      - 3306:3306
+    volumes:
+      - ./data/db:/var/lib/mysql
+    networks:
+      - redTest
+
+  phpmyadmin:
+    image: phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - redTest
+
+
+networks:
+  redTest:
+    name: test-red

@@ -16,6 +16,16 @@ services:
             - persistent:/var/lib/mysql
         networks:
             - default
+    www:
+        build: .
+        ports: 
+            - "80:80"
+        volumes:
+            - ./www:/var/www/html
+        links:
+            - db
+        networks:
+            - default
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         restart: always

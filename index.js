@@ -7,7 +7,7 @@ const bookRoutes = require("./routes/bookRoutes");
 const authorRoutes = require("./routes/authorRoutes");
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 80;
 
 // Configurar middleware para analizar JSON en las solicitudes
 app.use(express.json());
